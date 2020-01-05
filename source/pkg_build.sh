@@ -8,9 +8,16 @@ mkdir -p $tmpdir
 
 cd $tmpdir
 
-wget https://github.com/kata-containers/runtime/releases/download/$KATA_VERSION/$KATA_RELEASE_TAR
+wget --no-check-certificate https://github.com/kata-containers/runtime/releases/download/$KATA_VERSION/$KATA_RELEASE_TAR
 
-tar xzvf $KATA_RELEASE_TAR
+tar xvf $KATA_RELEASE_TAR
 
-#makepkg -l y -c y ${archive}/${plugin}-${version}-x86_64-1.txz
+sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./opt/kata/share/defaults/kata-containers/configuration.toml
+
+rm $KATA_RELEASE_TAR
+
+makepkg -l y -c y /mnt/output/kata-static-$KATA_VERSION-x86_64.txz
+
+cd /
+
 rm -rf $tmpdir
