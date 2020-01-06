@@ -3,7 +3,7 @@
 <!ENTITY name      "kata.runtime">
 <!ENTITY author    "dcflachs">
 <!ENTITY version   "2020.01.10">
-<!ENTITY md5       "0fdd411633388f774d063c55bbd6c4d6">
+<!ENTITY md5       "59a90e2658d22f16aad2948c55fd5b6a">
 <!ENTITY launch    "Settings/Userscripts">
 <!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
 <!ENTITY github    "dcflachs/kata.runtime">
