@@ -12,12 +12,24 @@ wget --no-check-certificate https://github.com/kata-containers/runtime/releases/
 
 tar xvf $KATA_RELEASE_TAR
 
-sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./opt/kata/share/defaults/kata-containers/configuration.toml
+mkdir -p $tmpdir/etc/kata-containers
+
+cp ./opt/kata/share/defaults/kata-containers/configuration.toml ./etc/kata-containers
+
+sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./etc/kata-containers/configuration.toml
+
+mkdir -p $tmpdir/etc/docker
+
+cp /mnt/source/daemon.json ./etc/docker/
 
 rm $KATA_RELEASE_TAR
 
-makepkg -l y -c y /mnt/output/kata-static-$KATA_VERSION-x86_64.txz
+makepkg -l y -c y $OUTPUT_FOLDER/kata-static-$KATA_VERSION-x86_64.txz
 
 cd /
 
 rm -rf $tmpdir
+
+echo "MD5:"
+
+md5sum $OUTPUT_FOLDER/kata-static-$KATA_VERSION-x86_64.txz
