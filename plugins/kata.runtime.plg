@@ -1,53 +1,40 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-<!ENTITY name      "kata.runtime">
-<!ENTITY author    "dcflachs">
-<!ENTITY version   "2020.01.10">
-<!ENTITY md5       "59a90e2658d22f16aad2948c55fd5b6a">
-<!ENTITY launch    "Settings/Userscripts">
-<!ENTITY plugdir   "/usr/local/emhttp/plugins/&name;">
-<!ENTITY github    "dcflachs/kata.runtime">
-<!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
+<!ENTITY name      	"kata.runtime">
+<!ENTITY author    	"dcflachs">
+<!ENTITY plgversion "2020.01.6">
+<!ENTITY version 	"1.9.3">
+<!ENTITY md5       	"59a90e2658d22f16aad2948c55fd5b6a">
+<!ENTITY launch    	"Settings/KataRuntime">
+<!ENTITY plugdir   	"/boot/config/plugins/&name;">
+<!ENTITY github    	"dcflachs/kata.runtime">
+<!ENTITY pluginURL 	"https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.3.3" icon="file-text-o">
+<PLUGIN name="&name;" author="&author;" version="&plgversion;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="file-text-o">
 
 <CHANGES>
-###2020.01.10
+###2020.01.6
 - Initial Release
 </CHANGES>
 
 <!-- The 'pre-install' script. -->
 
-
-
+<FILE Run="/bin/bash">
+<INLINE>
+# Remove old packages
+MD5=$(md5sum &plugdir;.txz 2>/dev/null|grep -Po '^\S+')
+if [[ $MD5 != &md5; ]]; then
+  rm -f &plugdir;*.txz
+fi
+</INLINE>
+</FILE>
 <!--
 The 'source' file.
 -->
-<FILE Name="/boot/config/plugins/&name;/&name;-&version;-x86_64-1.txz" Run="upgradepkg --install-new">
-<URL>https://raw.githubusercontent.com/&github;/master/archive/&name;-&version;-x86_64-1.txz</URL>
+<FILE Name="&plugdir;/&name;-&version;-x86_64.txz" Run="upgradepkg --install-new">
+<URL>https://github.com/&github;/releases/download/&version;/&name;-&version;-x86_64.txz</URL>
 <MD5>&md5;</MD5>
-</FILE>
-<!-- The 'pre-install' script. -->
-<FILE Run="/usr/bin/php">
-<INLINE>
-<![CDATA[
-<?
-  $flashContents = @array_diff(@scandir("/boot/config/plugins/user.scripts/scripts"),array(".",".."));
-  
-  if ( ! $flashContents ) {
-    exec("mkdir -p /boot/config/plugins/user.scripts/scripts");
-    exec("cp /usr/local/emhttp/plugins/user.scripts/scripts/* /boot/config/plugins/user.scripts/scripts/ -R -v");
-  }
-  exec("rm -rf /usr/local/emhttp/plugins/user.scripts/scripts");
-  if ( is_file("/boot/config/plugins/user.scripts/schedule.json") ) {
-    $schedule = file_get_contents("/boot/config/plugins/user.scripts/schedule.json");
-    $schedule = str_replace("/usr/local/emhttp/plugins/user.scripts/scripts/","/boot/config/plugins/user.scripts/scripts/",$schedule);
-    file_put_contents("/boot/config/plugins/user.scripts/schedule.json",$schedule);
-  }
-?>
-]]>
-</INLINE>
 </FILE>
 
 <!--
@@ -55,16 +42,12 @@ The 'post-install' script
 -->
 <FILE Run="/bin/bash">
 <INLINE>
-rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null &#124; grep -v '&version;')
-cp /usr/local/emhttp/plugins/user.scripts/cron/user.script.start.daily.sh /etc/cron.daily
-cp /usr/local/emhttp/plugins/user.scripts/cron/user.script.start.hourly.sh /etc/cron.hourly
-cp /usr/local/emhttp/plugins/user.scripts/cron/user.script.start.weekly.sh /etc/cron.weekly
-cp /usr/local/emhttp/plugins/user.scripts/cron/user.script.start.monthly.sh /etc/cron.monthly
-
 echo ""
 echo "----------------------------------------------------"
 echo " &name; has been installed."
-echo " Version: &version;"
+echo " Version: &plgversion;"
+echo " Runtime version: &version;"
+echo " Please restart the Docker daemon to enable."
 echo "----------------------------------------------------"
 echo ""
 </INLINE>
@@ -75,13 +58,10 @@ The 'remove' script.
 -->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
-rm /etc/cron.daily/user.script.start.daily.sh
-rm /etc/cron.hourly/user.script.start.hourly.sh
-rm /etc/cron.weekly/user.script.start.weekly.sh
-rm /etc/cron.monthly/user.script.start.monthly.sh
-rm -rf /tmp/user.scripts
+removepkg &name;-&version;-x86_64
 
-removepkg &name;-&version;-x86_64-1
+# Remove plugin related files
+rm -rf &plugdir;
 </INLINE>
 </FILE> 
 </PLUGIN>

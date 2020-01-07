@@ -24,7 +24,7 @@ cp /mnt/source/daemon.json ./etc/docker/
 
 rm $KATA_RELEASE_TAR
 
-makepkg -l y -c y $OUTPUT_FOLDER/kata-static-$KATA_VERSION-x86_64.txz
+makepkg -l y -c y $OUTPUT_FOLDER/kata.runtime-$KATA_VERSION-x86_64.txz
 
 cd /
 
@@ -32,4 +32,4 @@ rm -rf $tmpdir
 
 echo "MD5:"
 
-md5sum $OUTPUT_FOLDER/kata-static-$KATA_VERSION-x86_64.txz
+md5sum $OUTPUT_FOLDER/kata.runtime-$KATA_VERSION-x86_64.txz
