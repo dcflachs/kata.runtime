@@ -1,14 +1,14 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-<!ENTITY name      	"kata.runtime">
-<!ENTITY author    	"dcflachs">
+<!ENTITY name       "kata.runtime">
+<!ENTITY author     "dcflachs">
 <!ENTITY plgversion "2020.01.6">
-<!ENTITY version 	"1.9.3">
-<!ENTITY md5       	"59a90e2658d22f16aad2948c55fd5b6a">
-<!ENTITY launch    	"Settings/KataRuntime">
-<!ENTITY plugdir   	"/boot/config/plugins/&name;">
-<!ENTITY github    	"dcflachs/kata.runtime">
-<!ENTITY pluginURL 	"https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
+<!ENTITY version    "1.9.3">
+<!ENTITY md5        "59a90e2658d22f16aad2948c55fd5b6a">
+<!ENTITY launch     "Settings/KataRuntime">
+<!ENTITY plugdir    "/boot/config/plugins/&name;">
+<!ENTITY github     "dcflachs/kata.runtime">
+<!ENTITY pluginURL  "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&plgversion;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="file-text-o">
