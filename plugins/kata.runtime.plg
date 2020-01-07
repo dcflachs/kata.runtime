@@ -11,7 +11,7 @@
 <!ENTITY pluginURL  "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&plgversion;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="file-text-o">
+<PLUGIN name="Kata Containers Runtime" author="&author;" version="&plgversion;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
 ###2020.01.6
@@ -19,14 +19,10 @@
 </CHANGES>
 
 <!-- The 'pre-install' script. -->
-
 <FILE Run="/bin/bash">
 <INLINE>
-# Remove old packages
-MD5=$(md5sum &plugdir;.txz 2>/dev/null|grep -Po '^\S+')
-if [[ $MD5 != &md5; ]]; then
-  rm -f &plugdir;*.txz
-fi
+# Remove old 'source' files
+rm -f $(ls &plugdir;/&name;*.txz 2>/dev/null|grep -v '&version;')
 </INLINE>
 </FILE>
 <!--
