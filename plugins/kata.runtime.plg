@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name       "kata.runtime">
 <!ENTITY author     "dcflachs">
-<!ENTITY plgversion "2020.01.6">
-<!ENTITY version    "1.9.3">
+<!ENTITY plgversion "1.9.3">
+<!ENTITY version    "2020.01.06">
 <!ENTITY md5        "59a90e2658d22f16aad2948c55fd5b6a">
 <!ENTITY launch     "Settings/KataRuntime">
 <!ENTITY plugdir    "/boot/config/plugins/&name;">
@@ -11,7 +11,7 @@
 <!ENTITY pluginURL  "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
-<PLUGIN name="Kata Containers Runtime" author="&author;" version="&plgversion;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
+<PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
 ###2020.01.6
@@ -22,14 +22,14 @@
 <FILE Run="/bin/bash">
 <INLINE>
 # Remove old 'source' files
-rm -f $(ls &plugdir;/&name;*.txz 2>/dev/null|grep -v '&version;')
+rm -f $(ls &plugdir;/&name;*.txz 2>/dev/null|grep -v '&plgversion;')
 </INLINE>
 </FILE>
 <!--
 The 'source' file.
 -->
-<FILE Name="&plugdir;/&name;-&version;-x86_64.txz" Run="upgradepkg --install-new">
-<URL>https://github.com/&github;/releases/download/&version;/&name;-&version;-x86_64.txz</URL>
+<FILE Name="&plugdir;/&name;-&plgversion;-x86_64.txz" Run="upgradepkg --install-new">
+<URL>https://github.com/&github;/releases/download/&plgversion;/&name;-&plgversion;-x86_64.txz</URL>
 <MD5>&md5;</MD5>
 </FILE>
 
@@ -41,8 +41,8 @@ The 'post-install' script
 echo ""
 echo "----------------------------------------------------"
 echo " &name; has been installed."
-echo " Version: &plgversion;"
-echo " Runtime version: &version;"
+echo " Version: &version;"
+echo " Runtime version: &plgversion;"
 echo " Please restart the Docker daemon to enable."
 echo "----------------------------------------------------"
 echo ""
@@ -54,7 +54,7 @@ The 'remove' script.
 -->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
-removepkg &name;-&version;-x86_64
+removepkg &name;-&plgversion;-x86_64
 
 # Remove plugin related files
 rm -rf &plugdir;
