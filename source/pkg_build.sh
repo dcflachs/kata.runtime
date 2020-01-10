@@ -14,9 +14,9 @@ tar xvf $KATA_RELEASE_TAR
 
 mkdir -p $tmpdir/etc/kata-containers
 
-cp ./opt/kata/share/defaults/kata-containers/configuration.toml ./etc/kata-containers
+#cp ./opt/kata/share/defaults/kata-containers/configuration.toml ./etc/kata-containers
 
-sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./etc/kata-containers/configuration.toml
+sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./opt/kata/share/defaults/kata-containers/configuration-qemu.toml
 
 mkdir -p $tmpdir/etc/docker
 
