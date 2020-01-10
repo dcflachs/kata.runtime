@@ -3,8 +3,9 @@
 <!ENTITY name       "kata.runtime">
 <!ENTITY author     "dcflachs">
 <!ENTITY plgversion "1.9.3">
-<!ENTITY version    "2020.01.06">
-<!ENTITY md5        "59a90e2658d22f16aad2948c55fd5b6a">
+<!ENTITY release    "1.9.3a">
+<!ENTITY version    "2020.01.09">
+<!ENTITY md5        "85f737a5e7f319f06237be4180d20384">
 <!ENTITY launch     "Settings/KataRuntime">
 <!ENTITY plugdir    "/boot/config/plugins/&name;">
 <!ENTITY github     "dcflachs/kata.runtime">
@@ -14,7 +15,9 @@
 <PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
-###2020.01.6
+###2020.01.09
+- Fixed kata runtime arguments in docker daemon.json
+###2020.01.06
 - Initial Release
 </CHANGES>
 
@@ -29,7 +32,7 @@ rm -f $(ls &plugdir;/&name;*.txz 2>/dev/null|grep -v '&plgversion;')
 The 'source' file.
 -->
 <FILE Name="&plugdir;/&name;-&plgversion;-x86_64.txz" Run="upgradepkg --install-new">
-<URL>https://github.com/&github;/releases/download/&plgversion;/&name;-&plgversion;-x86_64.txz</URL>
+<URL>https://github.com/&github;/releases/download/&release;/&name;-&plgversion;-x86_64.txz</URL>
 <MD5>&md5;</MD5>
 </FILE>
 
