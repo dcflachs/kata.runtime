@@ -22,6 +22,10 @@ mkdir -p $tmpdir/etc/docker
 
 cp /mnt/source/daemon.json ./etc/docker/
 
+mkdir -p $tmpdir/usr/local/emhttp/plugins/kata.runtime
+
+cp /mnt/source/README.md ./usr/local/emhttp/plugins/kata.runtime
+
 rm $KATA_RELEASE_TAR
 
 makepkg -l y -c y $OUTPUT_FOLDER/kata.runtime-$KATA_VERSION-x86_64.txz
