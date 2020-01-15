@@ -2,9 +2,9 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name       "kata.runtime">
 <!ENTITY author     "dcflachs">
-<!ENTITY plgversion "1.9.3b">
-<!ENTITY version    "2020.01.09a">
-<!ENTITY md5        "16436c3a045ced97b6b4a5e1c964ba81">
+<!ENTITY plgversion "1.9.3c">
+<!ENTITY version    "2020.01.14">
+<!ENTITY md5        "0509694cbc59df3fa1d36302503aed30">
 <!ENTITY launch     "Settings/KataRuntime">
 <!ENTITY plugdir    "/boot/config/plugins/&name;">
 <!ENTITY github     "dcflachs/kata.runtime">
@@ -14,6 +14,9 @@
 <PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
+###2020.01.14
+- Added default ulimits to docker daemon.json
+- Added description to appear on unRAID plugin page.
 ###2020.01.09a
 - Reverted change to docker daemon.json and fixed the default kata config file.
 ###2020.01.09
