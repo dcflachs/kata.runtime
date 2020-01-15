@@ -1,4 +1,11 @@
 {
+  "default-ulimits": {
+    "nofile": {
+      "Name": "nofile",
+      "Hard": 40960,
+      "Soft": 40960
+    }
+  },
   "runtimes": {
     "kata-qemu": {
       "path": "/opt/kata/bin/kata-runtime",
