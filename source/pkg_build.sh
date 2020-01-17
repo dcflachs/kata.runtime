@@ -18,10 +18,6 @@ mkdir -p $tmpdir/etc/kata-containers
 
 sed -i 's/internetworking_model="tcfilter"/internetworking_model="macvtap"/' ./opt/kata/share/defaults/kata-containers/configuration-qemu.toml
 
-mkdir -p $tmpdir/etc/docker
-
-cp /mnt/source/daemon.json ./etc/docker/
-
 mkdir -p $tmpdir/usr/local/emhttp/plugins/kata.runtime
 
 cp /mnt/source/README.md ./usr/local/emhttp/plugins/kata.runtime
