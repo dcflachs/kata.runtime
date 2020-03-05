@@ -2,9 +2,9 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name       "kata.runtime">
 <!ENTITY author     "dcflachs">
-<!ENTITY plgversion "1.9.3d">
-<!ENTITY version    "2020.01.16">
-<!ENTITY md5        "489bbb38ebaf76fd6a85c50e487ffb2a">
+<!ENTITY plgversion "1.10.1">
+<!ENTITY version    "2020.03.04">
+<!ENTITY md5        "ce36b6409a6a3c360ab457d636965e63">
 <!ENTITY launch     "Settings/KataRuntime">
 <!ENTITY plugdir    "/boot/config/plugins/&name;">
 <!ENTITY github     "dcflachs/kata.runtime">
@@ -14,6 +14,8 @@
 <PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
+###2020.03.04
+- Kata Runtime Release 1.10.1
 ###2020.01.16
 - Removed docker daemon.json from the kata runtime package.
 - Added code to install daemon.json to the .plg file.
@@ -90,7 +92,7 @@ echo ""
 echo "----------------------------------------------------"
 echo " &name; has been installed."
 echo " Version: &version;"
-echo " Runtime version: 1.9.3"
+echo " Runtime version: 1.10.1"
 echo " Please restart the Docker daemon to enable."
 echo "----------------------------------------------------"
 echo ""
