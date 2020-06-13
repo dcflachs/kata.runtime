@@ -62,6 +62,6 @@
   //Trigger Dockerd to reload the daemon file
   echo "Reloading Dockerd...\n";
   $pidstr = shell_exec("pidof dockerd")
-  $pidint = intval($pid)
+  $pidint = intval($pidstr)
   posix_kill($pidint, SIGHUP)
 ?>
