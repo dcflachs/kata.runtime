@@ -1,19 +1,27 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-<!ENTITY name       "kata.runtime">
-<!ENTITY author     "dcflachs">
-<!ENTITY plgversion "1.10.1">
-<!ENTITY version    "2020.03.04">
-<!ENTITY md5        "ce36b6409a6a3c360ab457d636965e63">
-<!ENTITY launch     "Settings/KataRuntime">
-<!ENTITY plugdir    "/boot/config/plugins/&name;">
-<!ENTITY github     "dcflachs/kata.runtime">
-<!ENTITY pluginURL  "https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
+<!ENTITY author     	"dcflachs">
+<!ENTITY version    	"2020.06.13">
+<!ENTITY name       	"kata.runtime">
+<!ENTITY katapkgname    "kata.runtime">
+<!ENTITY katapkgversion "1.10.1">
+<!ENTITY katapkgmd5		"ce36b6409a6a3c360ab457d636965e63">
+<!ENTITY uipkgname    	"kata.runtime.ui">
+<!ENTITY uipkgversion 	"2020.06.13">
+<!ENTITY uipkgmd5		"f54daaba5472f5df1c02b6005fef551a">
+<!ENTITY launch     	"Settings/KataRuntime">
+<!ENTITY plugdir    	"/boot/config/plugins/&name;">
+<!ENTITY rundir    		"/usr/local/emhttp/plugins/&name;/scripts">
+<!ENTITY github     	"dcflachs/kata.runtime">
+<!ENTITY pluginURL  	"https://raw.githubusercontent.com/&github;/master/plugins/&name;.plg">
 ]>
 
 <PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
+###2020.06.13
+- Added kata.runtime.ui package.
+- Docker daemon restart is no longer required on install.
 ###2020.03.04
 - Kata Runtime Release 1.10.1
 ###2020.01.16
@@ -34,53 +42,33 @@
 <FILE Run="/bin/bash">
 <INLINE>
 # Remove old 'source' files
-rm -f $(ls &plugdir;/&name;*.txz 2>/dev/null|grep -v '&plgversion;')
+rm -f $(ls &plugdir;/&katapkgname;*.txz 2>/dev/null|grep -v '&katapkgversion;')
+rm -f $(ls &plugdir;/&uipkgname;*.txz 2>/dev/null|grep -v '&uipkgversion;')
 
 # Backup existing daemon.json if it exists
 if [ -f "/etc/docker/daemon.json" ]; then cp /etc/docker/daemon.json /etc/docker/daemon.bak; fi
 </INLINE>
 </FILE>
+
 <!--
 The 'source' file.
 -->
-<FILE Name="&plugdir;/&name;-&plgversion;-x86_64.txz" Run="upgradepkg --install-new">
-<URL>https://github.com/&github;/releases/download/&plgversion;/&name;-&plgversion;-x86_64.txz</URL>
-<MD5>&md5;</MD5>
+<FILE Name="&plugdir;/&katapkgname;-&katapkgversion;-x86_64.txz" Run="upgradepkg --install-new">
+<URL>https://github.com/&github;/releases/download/&katapkgversion;/&katapkgname;-&katapkgversion;-x86_64.txz</URL>
+<MD5>&katapkgmd5;</MD5>
 </FILE>
+
+
+<FILE Name="&plugdir;/&uipkgname;-&uipkgversion;-x86_64.txz" Run="upgradepkg --install-new">
+<URL>https://github.com/&github;/releases/download/&uipkgversion;/&uipkgname;-&uipkgversion;-x86_64.txz</URL>
+<MD5>&uipkgmd5;</MD5>
+</FILE>
+
 
 <!--
 Install the docker config file.
 -->
-<FILE Run="/usr/bin/php">
-<INLINE>
-<![CDATA[
-<?
-  $path = '/etc/docker';
-  $file_path = '/etc/docker/daemon.json';
-  @mkdir($path, 0777, true);
-  if (file_exists($file_path)){
-    echo "Found existing config file: $file_path\n";
-    echo "Updating...\n";
-    $jsonString = file_get_contents($file_path);
-    $data = json_decode($jsonString, true);
-  }else {
-    echo "Creating new config file: $file_path\n";
-    $data = [];
-  }
-
-  //Edit default ulimits
-  $data["default-ulimits"]["nofile"]["Name"] = "nofile";
-  $data["default-ulimits"]["nofile"]["Hard"] = 40960;
-  $data["default-ulimits"]["nofile"]["Soft"] = 40960;
-
-  //Add kata-qemu runtime
-  $data["runtimes"]["kata-qemu"]["path"] = '/opt/kata/bin/kata-runtime';
-  $data["runtimes"]["kata-qemu"]["runtimeArgs"] = ["--kata-config", '/opt/kata/share/defaults/kata-containers/configuration-qemu.toml'];
-  $newJsonString = json_encode($data, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES);
-  file_put_contents($file_path, $newJsonString);
-?>
-]]>
-</INLINE>
+<FILE Name="&rundir;/update_daemon_json.php" Run="/usr/bin/php">
 </FILE>
 
 <!--
@@ -92,8 +80,8 @@ echo ""
 echo "----------------------------------------------------"
 echo " &name; has been installed."
 echo " Version: &version;"
-echo " Runtime version: 1.10.1"
-echo " Please restart the Docker daemon to enable."
+echo " Runtime version: &katapkgversion;"
+echo " UI package version: &uipkgversion;"
 echo "----------------------------------------------------"
 echo ""
 </INLINE>
@@ -104,7 +92,8 @@ The 'remove' script.
 -->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
-removepkg &name;-&plgversion;-x86_64
+removepkg &katapkgname;-&katapkgversion;-x86_64
+removepkg &uipkgname;-&uipkgversion;-x86_64
 
 # Remove plugin related files
 rm -rf &plugdir;
