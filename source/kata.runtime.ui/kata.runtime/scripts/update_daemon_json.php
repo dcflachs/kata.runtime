@@ -58,4 +58,10 @@
 
   //Output new daemon.json
   file_put_contents($file_path, $newJsonString);
+
+  //Trigger Dockerd to reload the daemon file
+  echo "Reloading Dockerd...\n";
+  $pidstr = shell_exec("pidof dockerd")
+  $pidint = intval($pid)
+  posix_kill($pidint, SIGHUP)
 ?>
