@@ -1,7 +1,7 @@
 #!/bin/bash
 [ -z "$OUTPUT_FOLDER" ] && echo "Output Folder not set" && exit 1
 tmpdir=/tmp/tmp.$(( $RANDOM * 19318203981230 + 40 ))
-KATA_VERSION="${KATA_VERSION:-1.10.1}"
+KATA_VERSION="${KATA_VERSION:-1.10.5}"
 KATA_RELEASE_TAR=kata-static-$KATA_VERSION-x86_64.tar.xz
 
 mkdir -p $tmpdir
