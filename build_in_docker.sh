@@ -1,4 +1,7 @@
 #!/bin/bash
 
-docker run --rm --tmpfs /tmp -v $PWD/archive:/mnt/output:rw -e OUTPUT_FOLDER="/mnt/output" -v $PWD/source/kata.runtime:/mnt/source:ro vbatts/slackware-base:latest /mnt/source/pkg_build.sh &&
-docker run --rm --tmpfs /tmp -v $PWD/archive:/mnt/output:rw -e OUTPUT_FOLDER="/mnt/output" -v $PWD/source/kata.runtime.ui:/mnt/source:ro vbatts/slackware-base:latest /mnt/source/pkg_build.sh
+if getopts "u" arg; then
+docker run --rm --tmpfs /tmp -v $PWD/archive:/mnt/output:rw -e OUTPUT_FOLDER="/mnt/output" -e KATA_VERSION -v $PWD/source/kata.runtime.ui:/mnt/source:ro vbatts/slackware-base:latest /mnt/source/pkg_build.sh
+else
+docker run --rm --tmpfs /tmp -v $PWD/archive:/mnt/output:rw -e OUTPUT_FOLDER="/mnt/output" -e KATA_VERSION -v $PWD/source/kata.runtime:/mnt/source:ro vbatts/slackware-base:latest /mnt/source/pkg_build.sh
+fi
