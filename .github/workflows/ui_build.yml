@@ -38,19 +38,19 @@ jobs:
     - name: Set Post-Build ENV Variables
       id: version
       run: |
-          echo "::set-output name=version::${{step.date.output.date}}${UI_VERSION_LETTER}"
+          echo "::set-output name=version::${{steps.date.output.date}}${UI_VERSION_LETTER}"
    
     - name: Upload Artifact 
       uses: actions/upload-artifact@v2
       with:
-        name: kata.runtime.ui-${{step.version.output.version}}-x86_64.txz
+        name: kata.runtime.ui-${{steps.version.output.version}}-x86_64.txz
         path: ./archive/kata.runtime.ui-*
 
     - name: Set Release ENV Variables On Manual
       if: github.event_name == 'workflow_dispatch'
       run: |
           echo "DO_RELEASE=${{github.event.inputs.create_release}}" >> $GITHUB_ENV
-          echo "RELEASE_TAG_NAME=${{step.version.output.version}}" >> $GITHUB_ENV
+          echo "RELEASE_TAG_NAME=${{steps.version.output.version}}" >> $GITHUB_ENV
           
     - name: Set Release ENV Variables On Auto
       if: github.event_name != 'workflow_dispatch'
@@ -78,6 +78,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./archive/kata.runtime-${{step.version.output.version}}-x86_64.txz
-          asset_name: kata.runtime-${{step.version.output.version}}-x86_64.txz
+          asset_path: ./archive/kata.runtime-${{steps.version.output.version}}-x86_64.txz
+          asset_name: kata.runtime-${{steps.version.output.version}}-x86_64.txz
           asset_content_type: application/octet-stream
