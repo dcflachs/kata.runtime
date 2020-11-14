@@ -8,6 +8,8 @@ mkdir -p $tmpdir
 
 cd $tmpdir
 
+echo "https://github.com/kata-containers/runtime/releases/download/$KATA_VERSION/$KATA_RELEASE_TAR"
+
 wget --no-check-certificate https://github.com/kata-containers/runtime/releases/download/$KATA_VERSION/$KATA_RELEASE_TAR
 
 tar xvf $KATA_RELEASE_TAR
