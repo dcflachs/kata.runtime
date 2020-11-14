@@ -38,7 +38,7 @@ jobs:
     - name: Set Post-Build ENV Variables
       id: version
       run: |
-          echo "::set-output name=version::${{steps.date.output.date}}${UI_VERSION_LETTER}"
+          echo "::set-output name=version::${{steps.date.output.date}}${{env.UI_VERSION_LETTER}}"
    
     - name: Upload Artifact 
       uses: actions/upload-artifact@v2
