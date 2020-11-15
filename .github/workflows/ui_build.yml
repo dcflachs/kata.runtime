@@ -22,7 +22,7 @@ jobs:
       
     - name: Get current date
       id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')" 
+      run: echo "::set-output name=date::$(date +'%Y.%m.%d')" 
       
     - name: Set Pre-Build ENV Variables
       if: github.event.inputs.kata_ui_version_letter
