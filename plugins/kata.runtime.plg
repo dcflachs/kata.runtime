@@ -1,14 +1,14 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
 <!ENTITY author     	"dcflachs">
-<!ENTITY version    	"2020.06.13">
+<!ENTITY version    	"2020.12.03">
 <!ENTITY name       	"kata.runtime">
 <!ENTITY katapkgname    "kata.runtime">
 <!ENTITY katapkgversion "1.10.1">
 <!ENTITY katapkgmd5		"ce36b6409a6a3c360ab457d636965e63">
 <!ENTITY uipkgname    	"kata.runtime.ui">
-<!ENTITY uipkgversion 	"2020.06.13">
-<!ENTITY uipkgmd5		"f54daaba5472f5df1c02b6005fef551a">
+<!ENTITY uipkgversion 	"2020.11.22">
+<!ENTITY uipkgmd5		"087bf94b5fc256cfd76680920a53714c">
 <!ENTITY launch     	"Settings/KataRuntime">
 <!ENTITY plugdir    	"/boot/config/plugins/&name;">
 <!ENTITY rundir    		"/usr/local/emhttp/plugins/&name;/scripts">
@@ -19,6 +19,8 @@
 <PLUGIN name="Kata Containers Runtime" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.7.0" icon="cube">
 
 <CHANGES>
+###2020.12.03
+- Updated kata.runtime.ui package to prevent hanging at bootup.
 ###2020.06.13
 - Added kata.runtime.ui package.
 - Docker daemon restart is no longer required on install.
